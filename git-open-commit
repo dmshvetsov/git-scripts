@@ -1,0 +1,10 @@
+#!/bin/bash
+
+set -e
+
+commitSHA=$1
+test -z "$commitSHA" && echo "Please provide SHA string of a commit." 1>&2 && exit 1
+
+gitUserAndProject="$(git config --get remote.origin.url | cut -d : -f 2 | cut -d . -f 1)"
+
+open "https://github.com/$gitUserAndProject/commit/$commitSHA"
