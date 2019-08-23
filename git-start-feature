@@ -1,0 +1,25 @@
+#!/bin/sh
+
+set -e
+
+# Check if params are enough to go ahead.
+baseBranch=$1
+featureBranch=$2
+test -z "$baseBranch" && echo "Please provide the source base branch." 1>&2 && exit 1
+test -z "$featureBranch" && echo "Please provide the name for feature branch." 1>&2 && exit 1
+
+# Find which is your current branch
+if currentBranch=$(git symbolic-ref --short -q HEAD)
+then
+    echo On branch "$currentBranch"
+    echo "Pulling updates from the base branch $baseBranch..."
+
+    git checkout "$baseBranch"
+    git fetch -p
+    git merge --ff-only origin/"$baseBranch"
+    git checkout -b "$featureBranch"
+
+    echo "Branch $featureBranch is ready"
+else
+    echo "Cannot find the current branch!"
+fi
