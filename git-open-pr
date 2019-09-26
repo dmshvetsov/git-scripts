@@ -1,0 +1,15 @@
+#!/bin/bash
+
+set -e
+
+# import dependency
+parentPath=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
+. "$parentPath/os-open"
+
+# Check if params are enough to go ahead.
+prNum=$1
+test -z "$prNum" && echo "Please provide pull request number to open." 1>&2 && exit 1
+
+gitUserAndProject="$(git config --get remote.origin.url | cut -d : -f 2 | cut -d . -f 1)"
+
+$OS_OPEN "https://github.com/$gitUserAndProject/pull/$prNum"
