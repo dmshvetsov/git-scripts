@@ -2,10 +2,14 @@
 
 set -e
 
+# import dependency
+parentPath=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
+. "$parentPath/os-open"
+
 filePath=$1
 test -z "$filePath" && echo "Please provide file path to open." 1>&2 && exit 1
 
 gitUserAndProject="$(git config --get remote.origin.url | cut -d : -f 2 | cut -d . -f 1)"
 mainBranch="$(cat .git/refs/remotes/origin/HEAD | cut -d '/' -f 4)"
 
-open "https://github.com/$gitUserAndProject/blob/$mainBranch/$filePath"
+$OS_OPEN "https://github.com/$gitUserAndProject/blob/$mainBranch/$filePath"

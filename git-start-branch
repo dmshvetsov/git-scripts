@@ -1,11 +1,11 @@
-#!/bin/sh
+#!/bin/bash
 
 set -e
 
 # Check if params are enough to go ahead.
 baseBranch=$1
 featureBranch=$2
-test -z "$baseBranch" && echo "Please provide the source base branch." 1>&2 && exit 1
+test -z "$baseBranch" && echo "Please provide the base and feature branch." 1>&2 && exit 1
 test -z "$featureBranch" && echo "Please provide the name for feature branch." 1>&2 && exit 1
 
 # Find which is your current branch
