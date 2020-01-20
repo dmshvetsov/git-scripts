@@ -1,11 +1,2 @@
-# Found OS open utility and define it as OS_OPEN variable
-LINUX_OPEN="$(command -v xdg-open)"
-OSX_OPEN="$(command -v open)"
-if [ -x $LINUX_OPEN ]; then
-  OS_OPEN=$LINUX_OPEN
-elif [ -x $OSX_OPEN ]; then
-  OS_OPEN=$OSX_OPEN
-else
-  echo 'No open utility found'
-  exit 1
-fi
+# Determine current OS and corresponding open utility and define it as OS_OPEN variable
+OS_OPEN="$(command -v xdg-open || command -v open)"
