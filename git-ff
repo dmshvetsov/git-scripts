@@ -1,0 +1,13 @@
+#!/bin/bash
+
+set -e
+
+# Find which is your current branch
+if currentBranch=$(git symbolic-ref --short -q HEAD)
+then
+    git fetch -p
+    git merge --ff-only origin/"$currentBranch"
+    echo "Branch $currentBranch is fast forwarded"
+else
+    echo "Cannot find the current branch"
+fi
