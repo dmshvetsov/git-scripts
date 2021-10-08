@@ -1,0 +1,21 @@
+#!/bin/bash
+
+set -e
+
+# import dependency
+parentPath=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
+. "$parentPath/os-open"
+
+# Check if params are enough to go ahead.
+downmergeFrom=$1
+downmergeTo=$2
+test -z "$downmergeFrom" && echo "Please provide downmerge-from branch and downmerge-to branch." 1>&2 && exit 1
+test -z "$downmergeTo" && echo "Please provide both downmerge-from as first argument branch and downmerge-to branch as the second argument." 1>&2 && exit 1
+
+git fetch -p
+git checkout -B sync/$downmergeTo
+git reset --hard origin/$downmergeTo
+git merge origin/$downmergeFrom
+echo "resolve conflicts if any"
+echo "then do git commit"
+echo "and then git push origin sync/$downmergeTo"
